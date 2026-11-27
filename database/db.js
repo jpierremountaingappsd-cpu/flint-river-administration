@@ -1,8 +1,19 @@
 
 const Database = require("better-sqlite3");
 const path = require("node:path");
+const fs = require("node:fs");
 
-const db = new Database(path.join(__dirname, "flint-river.sqlite"));
+// Persistent storage directory for hosted environments
+const dataDir = process.env.DATA_DIR || "/data/storage";
+
+// Create the directory if it does not exist
+fs.mkdirSync(dataDir, { recursive: true });
+
+// Connect to the SQLite database
+const db = new Database(
+  path.join(dataDir, "flint-river.sqlite")
+);
+
 db.pragma("journal_mode = WAL");
 
 function initializeDatabase() {
@@ -63,4 +74,8 @@ function logAction(action, actorId, subjectId = null, details = "") {
   ).run(action, actorId, subjectId, details);
 }
 
-module.exports = { db, initializeDatabase, logAction };
+module.exports = {
+  db,
+  initializeDatabase,
+  logAction
+};
