@@ -3,8 +3,12 @@ const Database = require("better-sqlite3");
 const path = require("node:path");
 const fs = require("node:fs");
 
-// Persistent storage directory for hosted environments
-const dataDir = process.env.DATA_DIR || "/data/storage";
+// Choose the database directory based on the environment
+const dataDir = process.env.DATA_DIR || (
+  process.platform === "win32"
+    ? __dirname
+    : "/data/storage"
+);
 
 // Create the directory if it does not exist
 fs.mkdirSync(dataDir, { recursive: true });
@@ -14,6 +18,7 @@ const db = new Database(
   path.join(dataDir, "flint-river.sqlite")
 );
 
+// Enable SQLite write-ahead logging
 db.pragma("journal_mode = WAL");
 
 function initializeDatabase() {
@@ -70,7 +75,9 @@ function initializeDatabase() {
 
 function logAction(action, actorId, subjectId = null, details = "") {
   db.prepare(
-    "INSERT INTO audit_log (action, actor_id, subject_id, details) VALUES (?, ?, ?, ?)"
+    `INSERT INTO audit_log
+    (action, actor_id, subject_id, details)
+    VALUES (?, ?, ?, ?)`
   ).run(action, actorId, subjectId, details);
 }
 
