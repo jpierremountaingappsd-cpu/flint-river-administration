@@ -37,3 +37,4 @@ A starter Discord administration bot using JavaScript, Discord.js v14, and SQLit
 - Keep staff and student records limited to information genuinely needed for school roleplay administration. Do not store passwords, private contact details, or sensitive real-world student information.
 - The starter uses server Administrator permission or the configured `ADMIN_ROLE_ID` for protected commands. Before launch, replace this simple access check with a carefully defined role-permission system for each department.
 - This starter is not yet a complete production system. Ticket workflows, application forms, attendance sessions, student records, resignation workflows, richer audit logs, and department-specific permissions are planned next.
+# flint-river-administration
