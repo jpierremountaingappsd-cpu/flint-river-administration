@@ -1,0 +1,16 @@
+{
+  "name": "flint-river-high-school-bot",
+  "version": "1.0.0",
+  "description": "Discord administration bot for Flint River High School",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "deploy": "node deploy-commands.js"
+  },
+  "engines": { "node": ">=20.0.0" },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "discord.js": "^14.19.3",
+    "dotenv": "^16.4.7"
+  }
+}
